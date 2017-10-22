@@ -1,0 +1,146 @@
+<% include ../index_head_menu %>
+<div class="row">
+    <div class="col-md-12">
+                <div class="well">
+                    <h1 align="center">Danh sách tài khoản clone của bạn</h1>
+                </div>
+    </div>
+</div>
+<%  if(thongbao)
+    {
+%>
+<div class="row" style="height: 50%">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <b><%=thongbao%></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+        <div class="alert alert-success">
+            <b><a href="/hd_getcookie" target="_blank">Server chỉ nhận cookie lấy tại đây</a></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+    </div>
+</div>
+<%
+    }
+%>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-transparent">
+            <div class="content">
+                <div class="progress progress-striped active">
+                    <div id='loading' class="progress-bar progress-bar-danger"  role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    </div>
+                </div>                        
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block">
+            <div class="header">
+                <h2>Nhập cookie của tài khoản facebook cần cài bot <span class="label label-warning"><b><a href="/hd_getcookie" target="_blank">Hưỡng dẫn lấy cookie lấy tại đây</a></b></span></h2>
+            </div>
+            <div class="content controls">
+                <form action='/profile/bot_messenger/addclone' method='post' onsubmit="click_button('button')">
+                    <div class="form-row">
+                        <div class="col-md-1">Cookie:</div>
+                        <div class="col-md-11"><input type="text" class="form-control" name='cookie'></div>
+                    </div>
+                        <button onclick="loading()" id='button' type="submit" class="btn btn-default btn-clean btn-block" ">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-12">
+            <div class="block">
+                <div class="header">
+                    <h2>Danh sách tài khoản đang đăng nhập của bạn</h2>
+                </div>
+                <div class="content" style="text-align:center">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">STT</th>
+                                <th style="text-align:center">Ava</th>
+                                <th style="text-align:center">Tên tài khoản</th>
+                                <th style="text-align:center">ID Facebook</th>
+                                <th style="text-align:center">Tùy chỉnh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%  
+                            for(i=0; i < ds_accclone.length; i++) 
+                            {
+                        %>
+                            <tr>
+                                <td width="5%">
+                                    <div class="form-row">
+                                        <%=i+1%>
+                                    </div>
+                                </td>
+
+                                <td width="5%">
+                                    <div class="form-row">
+                                        <img src="<%=ds_accclone[i].db.avata%>" class="img-circle" alt="Cinque Terre" width="40" height="40">
+                                    </div>
+                                </td>
+
+                                <td width="15%">
+                                    <div class="form-row">
+                                        <h4><a href="<%=ds_accclone[i].db.link_profile%>" target="_blank"><%=ds_accclone[i].db.name%></a></h2>
+                                    </div>
+                                </td>
+                                
+                                <td width="15%">
+                                <div class="form-row">
+                                    </div>
+                                    <h4><a href="<%=ds_accclone[i].db.link_profile%>" target="_blank"><%=ds_accclone[i].db.id_profile%></a></h2>
+                                </td>
+
+                                <td width="10%">
+                                    <div class="form-row">
+                                        <form method="post" action='/profile/bot_messenger_delete' id='delete<%=i%>'>
+                                            <input type="hidden" name="id" value="<%=ds_accclone[i].db.id%>" >
+                                            <a onclick="submitform_delete('<%=i%>')" class="widget-icon widget-icon-large widget-icon-dark icon-trash"></a>
+                                        </form>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>                       
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function loading(){
+        var i=0
+        setInterval(function(){
+            document.getElementById("loading").style.width = i+"%";
+            i++
+        },150)
+    }
+
+    function click_button(id) {
+        return document.getElementById(id).disabled = true;
+    }
+
+    function submitform_delete(id) {
+        document.getElementById('delete'+id).submit(); 
+    } 
+
+    function submitform_capnhattk(id) 
+    {   
+        document.getElementById('capnhattk'+id).submit(); 
+    }
+</script>

@@ -1,0 +1,138 @@
+<% include index_head %>    
+<div class="row">
+    <div class="col-md-12">
+         <nav class="navbar brb" role="navigation">
+            <!-- Logo -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only"> AutoFBMKT</span>
+                    <span class="icon-reorder"></span>                            
+                </button>
+                <a class="navbar-brand" href="/profile"><img src="/back-end/img/logo.png"/></a>                                                                                     
+            </div>
+
+            <!-- Menu -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">                                     
+                <ul class="nav navbar-nav">
+                    <!-- Trang chủ -->
+                    <li>
+                        <a href="/profile">
+                            <span class="icon-home"></span> trang chủ
+                        </a>
+                    </li>
+
+                    <!-- Tool cho tài khoản cá nhân -->
+                    <li class="dropdown">
+                        <a href="sample_profile.html#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span> tool cho profile</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/profile/ds_accounts">Thêm tài khoản mới</a>
+                            </li>
+                            <li>
+                                <a href="/profile/bot_messenger_setup">Kích hoạt tự động trả lời Messenger</a>
+                            </li>
+                            <li>
+                                <a href="/profile/auto_camxuc">Auto Thả Cảm Xúc</a>
+                            </li>
+                            <li>
+                                <a href="/profile/auto_chucmungsinhnhat">Auto Chúc Mừng Sinh Nhật</a>
+                            </li>
+                            <li>
+                                <a href="#">Lên lịch đăng bài<i class="icon-angle-right pull-right"></i></a>
+                                <ul class="dropdown-submenu">
+                                    <li><a href="/profile/lichdangbai">Lịch đăng đã setup</a></li>
+                                    <li><a href="/profile/lenlichdangbai_groups">Đăng vào group</a></li>
+                                    <!-- <li><a href="#">Đăng lên tường</a></li>                                             -->
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Lên lịch gửi tin nhắn</a>
+                            </li>
+                            <li>
+                                <a href="#">Quản lý tin nhắn</a>
+                            </li>
+                            <li>
+                                <a href="#">Quản lý bình luận</a>
+                            </li>
+                            <li>
+                                <a href="#">Kích hoạt tự động nhắn tin trên bình luân theo id post</a>
+                            </li>
+                            <li>
+                                <a href="#">Kích hoạt tự động trả lời bình luận theo id post</a>
+                            </li>
+                            <li>
+                                <a href="#">Lọc tương tác</a>
+                            </li>
+                            <li>
+                                <a href="#">Tìm kiếm khách hàng tiềm năng</a>
+                            </li>
+                        </ul>                                
+                    </li>
+
+                    <!-- Tool cho page -->
+                    <li class="dropdown">
+                        <a href="sample_profile.html#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-cogs"></span> tool cho page</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Tự động trả lời tin nhắn</a></li>
+                            <li><a href="#">Tự động nhắn tin khi khách cmt</a></li>
+                            <li><a href="#">Copy bài viết từ page khác</a></li>                                    
+                            <li><a href="#">Gửi tin nhắn hàng loạt</a></li>
+                            <li><a href="#">Tự động sms khi có khách cmt</a></li>                                  
+                            <li><a href="#">Tự động ẩn comments</a></li>                                             
+                            <li>
+                                <a href="#">Đăng bài tự động<i class="icon-angle-right pull-right"></i></a>
+                                <ul class="dropdown-submenu">
+                                    <li><a href="#">Đăng tự động</a></li>
+                                    <li><a href="#">Lên lịch đăng</a></li>
+                                    <li><a href="#">Mẫu đăng</a></li>
+                                    <li><a href="#">Báo cáo thống kê</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Tool cho group -->
+                    <li class="dropdown">
+                        <a href="sample_profile.html#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-group"></span> tool cho group</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Thêm thành viên từ profile</a></li>
+                            <li><a href="#">Lọc tương tác thành viên</a></li>
+                            <!-- <li><a href="#">Copy bài viết từ page khác</a></li> -->
+<!--                             <li><a href="#">Gửi tin nhắn hàng loạt</a></li>
+                            <li><a href="#">Tự động sms khi có khách cmt</a></li>                                  
+                            <li><a href="#">Tự động ẩn comments</a></li>                                             
+                            <li>
+                                <a href="#">Đăng bài tự động<i class="icon-angle-right pull-right"></i></a>
+                                <ul class="dropdown-submenu">
+                                    <li><a href="#">Đăng tự động</a></li>
+                                    <li><a href="#">Lên lịch đăng</a></li>
+                                    <li><a href="#">Mẫu đăng</a></li>
+                                    <li><a href="#">Báo cáo thống kê</a></li>
+                                </ul>
+                            </li> -->
+                        </ul>
+                    </li>
+                    
+                    <!-- Từ khóa -->
+                    <li><a href="/user/bot_messenger_dstukhoa" ><span class="icon-pencil" ></span> Cài đặt từ khóa</a></li>
+
+                    <!-- Chỉnh sửa thông tin cá nhân -->
+                    <li><a href="/profile/edit" ><span class="icon-pencil" ></span> Chỉnh sửa thông tin cá nhân</a></li>
+
+                    <!-- Page admin -->
+                    <li class="dropdown">
+                        <a href="sample_profile.html#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-globe"></span> Liên hệ với chúng tôi</a>
+                        <ul class="dropdown-menu">                                    
+                            <li>
+                                <a href="https://www.facebook.com/mktonl" target="_blank"> Hỗ trợ Hưỡng dẫn sử dụng</a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/kobi.hoang" target="_blank"> Hỗ trợ báo lỗi</a>
+                            </li>
+                        </ul>                                
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>            
+</div>

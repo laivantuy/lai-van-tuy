@@ -1,0 +1,197 @@
+<% include ../index_head_menu %>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-transparent">
+            <div class="content">
+                <div class="well">
+                    <h1 align="center">Cài đặt: Tự động thả cảm xúc</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%  if(thongbao)
+    {
+%>
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <b><%=thongbao%></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+        <div class="alert alert-success">
+            <b><a href="/hd_getcookie" target="_blank">Server chỉ nhận cookie lấy tại đây</a></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+    </div>
+</div>
+<%
+    }
+%>
+<!-- <div class="row">
+    <div class="col-md-12">
+        <div class="block block-transparent">
+            <div class="content">
+                <div class="progress progress-striped active">
+                    <div id='loading' class="progress-bar progress-bar-danger"  role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    </div>
+                </div>                        
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="row">
+        <div class="col-md-12">
+            <div class="block">
+                <div class="header">
+                    <h2>Danh sách tài khoản đang đăng nhập của bạn</h2>
+                </div>
+                <div class="content">
+                    <table class="table" style="text-align:center">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">STT</th>
+                                <th style="text-align:center">Ava</th>
+                                <th style="text-align:center">Tên tài khoản</th>
+                                <th style="text-align:center">Trạng Thái Auto</th>
+                                <th style="text-align:center">Danh sách id chặn</th>
+                                <th style="text-align:center">Danh sách Cảm Xúc</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align:center">
+                        <%  
+                            for(i=0; i < ds_accclone.length; i++) 
+                            {
+                        %>
+                            <tr>
+                                <td width="5%" style="text-align:center">
+                                    <div class="form-row">
+                                        <%=i+1%>
+                                    </div>
+                                </td>
+
+                                <td width="5%" style="text-align:center">
+                                    <div class="form-row">
+                                        <img src="<%=ds_accclone[i].db.avata%>" class="img-circle" alt="Cinque Terre" width="40" height="40">
+                                    </div>
+                                </td>
+
+                                <td width="15%" style="text-align:center">
+                                    <div class="form-row">
+                                        <h4><a href="<%=ds_accclone[i].db.link_profile%>" target="_blank"><%=ds_accclone[i].db.name%></a></h4>
+                                    </div>
+                                </td>
+
+                                <form action="/profile/auto_camxuc" method="post" onsubmit="click_button('button<%=i%>')">
+                                    <td width="15%" style="text-align:center">
+                                        <%
+                                            if(ds_accclone[i].db.trangthai_camxuc == 1)
+                                            {
+                                        %>
+                                            <div class="form-row">
+                                                <input type='hidden' value="0" name='trangthai'>
+                                                <button id='button<%=i%>' type="submit" class="btn btn-danger" onclick=''>Stop</button>
+                                            </div>
+                                        <%  }
+                                            else
+                                            {
+                                        %>
+                                        <div class="form-row">
+                                            <input type='hidden' value="1" name='trangthai'>
+                                            <button id='button<%=i%>' type="submit" class="btn btn-success" onclick='loading("<%=i%>")'>Start</button>
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                    </td>
+
+                                    <td width="35%" style="text-align:center">
+                                        <div class="controls">
+                                            <div class="col-md-12">
+                                                <div class="form-row">
+                                                     <input type="text" class="tags" value="" id='input_tag<%=i%>' name='ds_chan'/>
+                                                </div>
+                                            </div>                                          
+                                        </div>
+                                    </td>
+                                    
+                                    <td width="10%" style="text-align:center">
+                                        <div class="form-row">
+                                            <input type="hidden" name="id_account" value="<%=ds_accclone[i].db.id%>" >
+                                            <select id='select<%=i%>' class="select2" multiple="multiple" tabindex="-1" name="camxuc" style="width: 100%;">
+                                                    <option id='LIKE<%=i%>' value="LIKE">LIKE</option>
+                                                    <option id='LOVE<%=i%>' value="LOVE">LOVE</option>
+                                                    <option id='HAHA<%=i%>' value="HAHA">HAHA</option>
+                                                    <option id='WOW<%=i%>' value="WOW">WOW</option>
+                                                    <option id='SAD<%=i%>' value="SAD">BUỒN</option>
+                                                    <option id='ANGRY<%=i%>' value="ANGRY">PHẪN NỘ</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </form>
+                            </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>                       
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var ds_accclone_js = <%-JSON.stringify(ds_accclone)%>
+
+    for(i=0; i< ds_accclone_js.length; i++)
+    {
+        if(ds_accclone_js[i].db.camxuc)
+        {
+            if(typeof ds_accclone_js[i].db.camxuc != 'string')
+            {
+                // alert(ds_accclone_js[i].db.camxuc[1])
+                for(n=0; n< ds_accclone_js[i].db.camxuc.length; n++)
+                {
+                    document.getElementById(ds_accclone_js[i].db.camxuc[n]+i).selected = true;
+
+                }
+            }
+            else
+                document.getElementById(ds_accclone_js[i].db.camxuc+i).selected = true;
+        }
+
+        if(ds_accclone_js[i].db.ds_chan)
+            document.getElementById('input_tag'+i).value = ds_accclone_js[i].db.ds_chan
+    }
+    
+    
+
+    function loading(i){
+        if(document.getElementById("select"+i).value.length == 0)
+        {
+            alert('Nếu bạn không chọn cảm xúc thì cảm xúc mặc định sẽ là LOVE')
+            document.getElementById("select"+i).value = 'LOVE'
+        }
+        
+    }
+
+    function click_button(id) {
+        return document.getElementById(id).disabled = true;
+    }
+
+    function submitform_delete(id) {
+        document.getElementById('delete'+id).submit(); 
+    } 
+
+    function submitform_capnhattk(id) 
+    {   
+        document.getElementById('capnhattk'+id).submit(); 
+    }
+
+    function submitfrom_config_quetsdt(id) 
+    {   
+        document.getElementById('config_quetsdt'+id).submit(); 
+    }
+</script>

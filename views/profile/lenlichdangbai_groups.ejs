@@ -1,0 +1,304 @@
+<% include ../index_head_menu %>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-transparent">
+            <div class="content">
+                <div class="well">
+                    <h1 align="center">Lên lịch đăng bài</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%  if(thongbao)
+    {
+%>
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <b><%=thongbao%></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+        <div class="alert alert-success">
+            <b><a href="/hd_getcookie" target="_blank">Server chỉ nhận cookie lấy tại đây</a></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+    </div>
+</div>
+<%
+    }
+%>
+<form action="/profile/lenlichdangbai_groups" method="post">
+<input type="hidden" name="id_user" value='<%=user.id_facebook%>'/>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+        <div class="block">
+            <div class="content controls">
+                <div class="form-row">
+                    <input type="text" class="form-control" name="name" placeholder="Nhập tên chiến dịch"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="block block-drop-shadow">
+            <div class="content controls">
+                <div class="form-row">
+                    <div class="col-md-5">Thời gian đăng:</div>
+                    <div class="col-md-7">                                                    
+                        <div class="input-group">
+                            <input type="text" class="datetimepicker form-control" name='time'/>
+                        </div>                                                                                                
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="block">
+            <div class="content controls">
+                <div class="form-row">
+                    <div class="col-md-3">Tài khoản:</div>
+                    <div class="col-md-9">
+                        <select class="select2" style="width: 100%;" tabindex="-1" name='id_account'>
+                            <%
+                                for(i=0; i< ds_accclone.length; i++)
+                                {
+                                    %>
+                                        <option value="<%=ds_accclone[i].db.id%>"><%=ds_accclone[i].db.name%> | <%=ds_accclone[i].db.id_profile%></option>
+                                    <%
+                                }
+                            %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-fill-black">
+            <div class="header">
+                <h2>DS id các nhóm cần đăng (Phân cách các nhóm cần đăng bằng dấu "|" ví dụ: id1|id2|id3 hoặc mỗi dòng 1 id, tool chỉ làm việc được với id, tìm id group <a href="https://findmyfbid.com" target="_blank" >tại đây</a> )</h2>
+            </div>
+            <textarea rows="5" name='id_groups'></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-fill-black">
+            <div class="header">
+                <h2>Nội dung bài đăng</h2>
+            </div>
+            <textarea rows="10" name='noidung'></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-drop-shadow">
+            <div class="content">
+                <h2>Cấu hình mở rộng</h2>
+                <div class="form-row">
+                    <div class="col-md-2">File đính kèm:<br>(Chọn đúng định dạng)</div>
+                    <div class="col-md-1">
+                        <div class="radiobox-inline">
+                            <label><input type="radio" name="file" onchange="type_file('url');" value='share'/> Url Cần share</label>
+                        </div>
+                        <div class="radiobox-inline">
+                            <label><input type="radio" name="file" onchange="type_file('file');" value='video'/> Video</label>
+                        </div>
+                        <div class="radiobox-inline">
+                            <label><input type="radio" name="file" onchange="type_file('file');" value='image'/> Hình ảnh</label>
+                        </div>
+                        <div class="radiobox-inline">
+                            <label><input type="radio" name="file" onchange="type_file('null');" value='null'/> Null</label>
+                        </div>
+                    </div>
+                       
+                </div>
+
+                <div class="form-row">
+                    <div id='radio'></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="radiobox-inline">
+                                <div class="col-md-2">
+                                    <label> Auto up top </label>
+                                </div>
+                                <input type="checkbox" name="auto_uptop" onchange="uptop(this);"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row" >
+                    <div id='div_uptop' class="invisible">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2"><label> Nội dung up top</label></div>
+                        <div class="col-md-3"><input type="text" class="form-control" name="noidung_uptop" placeholder="Nội dung"/></div>
+                        <div class="col-md-2"><label> Thời gian uptop lặp lại sau</label></div>
+                        <div class="col-md-1"><input type="number" class="form-control" name="time_uptop" placeholder="Phút" min='10'/></div>
+                        <div class="col-md-2"><label> Xóa comment uptop</label></div>
+                        <div class="col-md-1"><input type="checkbox" name="uptop_delete" onchange="uptop_delete(this);"/></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="radiobox-inline">
+                                <div class="col-md-2">
+                                    <label> Xử lý comments</label>
+                                </div>
+                                <input type="checkbox" name="xulycomment" onchange="xulycomment_func(this);"/>
+                            </div>
+                        </div>
+                        <div id='div_xulycomment' class="invisible">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1">Auto messeger</div>
+                                <div class="col-md-2">
+                                    <select class="select2" style="width: 100%;" tabindex="-1" name='ds_tukhoa_messege' multiple="multiple">
+                                        <%
+                                            for(i=0; i< form_tukhoa.length; i++)
+                                            {
+                                                %>
+                                                    <option value="<%=form_tukhoa[i].db.id%>"><%=form_tukhoa[i].db.name_tukhoa%></option>
+                                                <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">Auto trả lời comment</div>
+                                <div class="col-md-2">
+                                    <select class="select2" style="width: 100%;" tabindex="-1" name='ds_tukhoa_cmt' multiple="multiple">
+                                        <%
+                                            for(i=0; i< form_tukhoa.length; i++)
+                                            {
+                                                %>
+                                                    <option value="<%=form_tukhoa[i].db.id%>"><%=form_tukhoa[i].db.name_tukhoa%></option>
+                                                <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="radiobox-inline">
+                                    <%  if(user.id_facebook)
+                                        {
+                                    %>  
+                                        <div class="col-md-2">
+                                            <label>Quét số điện thoại trong cmt</label>
+                                        </div>
+                                        <input type="checkbox" name="quetsodt"/>
+                                    <%  
+                                        }
+                                        else
+                                        {
+                                    %>
+                                            <a href="/profile/edit">Cập nhật ID tài khoản chính tại đây</a>
+                                    <%
+                                        }
+                                    %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="hidden" name="trangthai" value='on'/>
+        <button type="submit" class="btn btn-default btn-block">Kích hoạt</button>
+    </div>
+</div>
+</form>
+<script type="text/javascript">
+
+    var ds_accclone_js = <%-JSON.stringify(ds_accclone)%>
+    for(i=0; i< ds_accclone_js.length; i++)
+    {
+        if(ds_accclone_js[i].db.auto_cmsn)
+        {
+            document.getElementById("time"+i).value = ds_accclone_js[i].db.auto_cmsn.time
+            document.getElementById("noidung"+i).value = ds_accclone_js[i].db.auto_cmsn.noidung
+        }
+    }
+
+    function xulycomment_func(xulycomment){
+        if(xulycomment.checked == true)
+            document.getElementById('div_xulycomment').className = '';
+        else
+            document.getElementById('div_xulycomment').className = 'invisible';
+    }
+
+    function uptop(uptop){
+        if(uptop.checked == true)
+            document.getElementById('div_uptop').className = '';
+        else
+            document.getElementById('div_uptop').className = 'invisible';
+    }
+
+    function type_file(type){
+
+        switch(type){
+            case 'file':
+            case 'url':
+            {
+                document.getElementById('radio').innerHTML = '<div class="col-md-1">URL:</div><div class="col-md-2"><input type="url" class="form-control" name="url" placeholder="Cho url vào đây"/></div>';
+                break;
+            }
+            case 'a':
+            {
+                document.getElementById('radio').innerHTML = '<div class="col-md-1">File:</div><div class="col-md-2"><div class="input-group file"><input type="text" class="form-control"/><input type="file" name="file"/><span class="input-group-btn"><button class="btn btn-primary" type="button">Browse</button></span></div></div>';
+                break;
+            }
+            case 'null':
+            {
+                document.getElementById('radio').innerHTML = '';
+                break;
+            }
+
+        }
+    }
+
+    function loading(i){
+        if(document.getElementById("select"+i).value.length == 0)
+        {
+            alert('Nếu bạn không chọn cảm xúc thì cảm xúc mặc định sẽ là LOVE')
+            document.getElementById("select"+i).value = 'LOVE'
+        }
+        
+    }
+
+    function click_button(id) {
+        return document.getElementById(id).disabled = true;
+    }
+
+    function submitform_delete(id) {
+        document.getElementById('delete'+id).submit(); 
+    } 
+
+    function submitform_capnhattk(id) 
+    {   
+        document.getElementById('capnhattk'+id).submit(); 
+    }
+
+    function submitfrom_config_quetsdt(id) 
+    {   
+        document.getElementById('config_quetsdt'+id).submit(); 
+    }
+</script>

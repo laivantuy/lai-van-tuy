@@ -1,0 +1,241 @@
+<% include ../index_head_menu %>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-transparent">
+            <div class="content">
+                <div class="well">
+                    <h1 align="center">Lịch đăng bài</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%  if(thongbao)
+    {
+%>
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <b><%=thongbao%></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+        <div class="alert alert-success">
+            <b><a href="/hd_getcookie" target="_blank">Server chỉ nhận cookie lấy tại đây</a></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+    </div>
+</div>
+<%
+    }
+%>
+
+<div class="row">
+    <div class="col-md-12">
+        <%
+            for(i=0; i< ds_accclone.length; i++)
+            {
+                %>
+                    <div class="block block-fill-black">
+                        <div class="header">
+                            <h2><%=ds_accclone[i].db.name%> | <%=ds_accclone[i].db.id_profile%></h2>
+                            <div class="side pull-right">                            
+                                <ul class="buttons">
+                                    <li><a href="#" class="block-toggle tip" title="Toggle content"><span class="icon-chevron-up"></span></a></li>
+                                </ul>
+                            </div>                        
+                        </div>
+                        <div class="content" style="display: none;">
+                            <div class="block">
+                                <div class="content">
+                                    <table class="table table-hover" style="text-align:center">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center">#</th>
+                                                <th style="text-align:center">Tên chiến dịch</th>
+                                                <th style="text-align:center">Trạng thái</th>
+                                                <th style="text-align:center">Thời gian</th>
+                                                <th style="text-align:center">Auto up top</th>
+                                                <th style="text-align:center">Quét số đt</th>
+                                                <th style="text-align:center">Ds từ khóa comment</th>
+                                                <th style="text-align:center">Ds từ khóa messenger</th>
+                                                <th style="text-align:center">ID post đã đăng thành công</th>
+                                                <th style="text-align:center">Xóa</th>
+                                            </tr>
+                                        </thead>
+                                        <%
+                                            if(ds_accclone[i].db.lenlichdangbai)
+                                            {
+                                                for(g=0; g< ds_accclone[i].db.lenlichdangbai.length; g++)
+                                                {
+                                        %>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><%=g%></td>
+                                                        <td><%=ds_accclone[i].db.lenlichdangbai[g].name%></td>
+                                                        <td><%=ds_accclone[i].db.lenlichdangbai[g].trangthai%></td>
+                                                        <td><%=ds_accclone[i].db.lenlichdangbai[g].time%></td>
+                                                        <td><%=ds_accclone[i].db.lenlichdangbai[g].auto_uptop%></td>
+                                                        <td><%=ds_accclone[i].db.lenlichdangbai[g].quetsodt%></td>
+                                                        <td>
+                                                            <div class="block block-fill-black">
+                                                                <a title="Toggle content" id='butons_cmt_<%=i%>_<%=g%>' onclick="toggle('<%=i%>_<%=g%>');">
+                                                                    <div class="header">
+                                                                        <ul class="buttons">
+                                                                            <li><h2>Click</h2></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </a>
+                                                                <div style="display: none;" id='comments_<%=i%>_<%=g%>'>
+                                                                <%
+                                                                    if(ds_accclone[i].db.lenlichdangbai[g].ds_tukhoa_cmt)
+                                                                    {
+                                                                        for(j=0; j< ds_accclone[i].db.lenlichdangbai[g].ds_tukhoa_cmt.length; j++)
+                                                                        {
+                                                                            for(n=0; n< form_tukhoa.length; n++)
+                                                                            {
+                                                                                if(ds_accclone[i].db.lenlichdangbai[g].ds_tukhoa_cmt[j] == form_tukhoa[n].db.id)
+                                                                                {
+                                                                                %>
+                                                                                    <div class="content">
+                                                                                        <%=form_tukhoa[n].db.name_tukhoa%>
+                                                                                    </div>
+                                                                                <%
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
+                                                                </div> 
+                                                            </div>
+                                                        </td>
+                                                        <td width="15%">
+                                                            <div class="block block-fill-black">
+                                                                <a title="Toggle content" id='butons_messenger_<%=i%>_<%=g%>' onclick="toggle_messenger('<%=i%>_<%=g%>');">
+                                                                    <div class="header">
+                                                                        <ul class="buttons">
+                                                                            <li><h2>Click</h2></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </a>
+                                                                <div style="display: none;" id='mesenger_<%=i%>_<%=g%>'>
+                                                                <%
+                                                                    if(ds_accclone[i].db.lenlichdangbai[g].ds_tukhoa_cmt)
+                                                                    {
+                                                                        for(j=0; j< ds_accclone[i].db.lenlichdangbai[g].ds_tukhoa_cmt.length; j++)
+                                                                        {
+                                                                            for(n=0; n< form_tukhoa.length; n++)
+                                                                            {
+                                                                                if(ds_accclone[i].db.lenlichdangbai[g].ds_tukhoa_cmt[j] == form_tukhoa[n].db.id)
+                                                                                {
+                                                                                %>
+                                                                                    <div class="content">
+                                                                                        <%=form_tukhoa[n].db.name_tukhoa%>
+                                                                                    </div>
+                                                                                <%
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
+                                                                </div> 
+                                                            </div>
+                                                        </td>
+                                                        <td width="20%">
+                                                            <div class="block block-fill-black">
+                                                                <a title="Toggle content" id='butons_post_<%=i%>_<%=g%>' onclick="toggle_post('<%=i%>_<%=g%>');">
+                                                                    <div class="header">
+                                                                        <ul class="buttons">
+                                                                            <li><h2>Click</h2></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </a>
+                                                                <div style="display: none;" id='post_<%=i%>_<%=g%>'>
+                                                                <%
+                                                                    if(ds_accclone[i].db.lenlichdangbai[g].id_post)
+                                                                    {
+                                                                        for(j=0; j< ds_accclone[i].db.lenlichdangbai[g].id_post.length; j++)
+                                                                        {
+                                                                        %>
+                                                                            <div class="content">
+                                                                                <a href="https://fb.com/<%=ds_accclone[i].db.lenlichdangbai[g].id_post[j]%>" target="_blank">ID: <%=ds_accclone[i].db.lenlichdangbai[g].id_post[j]%></a>
+                                                                            </div>
+                                                                        <% 
+                                                                        }
+                                                                    }
+                                                                %>
+                                                                </div> 
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <form action="/profile/delete_lichdangbai" method="post">
+                                                                <input type="hidden" name="id_account" value="<%=ds_accclone[i].db.id%>">
+                                                                <input type="hidden" name="id_lichdangbai" value="<%=ds_accclone[i].db.lenlichdangbai[g].id%>">
+                                                                <button type="submit" class="btn btn-primary">Xóa</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </table>                       
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                <%
+            }
+        %>
+               
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var ds_accclone_js = <%-JSON.stringify(ds_accclone)%>
+    for(i=0; i< ds_accclone_js.length; i++)
+    {
+        if(ds_accclone_js[i].db.auto_cmsn)
+        {
+            document.getElementById("time"+i).value = ds_accclone_js[i].db.auto_cmsn.time
+            document.getElementById("noidung"+i).value = ds_accclone_js[i].db.auto_cmsn.noidung
+        }
+    }
+
+    function toggle_post(id)
+    {
+        if(document.getElementById("post_"+id).style.display == 'none')
+        {
+            document.getElementById("post_"+id).style.display = 'block'
+        }
+        else
+        {
+            document.getElementById("post_"+id).style.display = 'none'
+        }
+    }
+
+    function toggle_messenger(id)
+    {
+        if(document.getElementById("mesenger_"+id).style.display == 'none')
+        {
+            document.getElementById("mesenger_"+id).style.display = 'block'
+        }
+        else
+        {
+            document.getElementById("mesenger_"+id).style.display = 'none'
+        }
+    }
+
+    function toggle(id)
+    {
+        if(document.getElementById("comments_"+id).style.display == 'none')
+        {
+            document.getElementById("comments_"+id).style.display = 'block'
+        }
+        else
+        {
+            document.getElementById("comments_"+id).style.display = 'none'
+        }
+    }
+</script>

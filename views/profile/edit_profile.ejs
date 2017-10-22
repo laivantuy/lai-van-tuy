@@ -1,0 +1,208 @@
+<% include ../index_head_menu %>
+<div class="row">
+    <div class="col-md-2">
+        <!-- From Đổi mật khẩu -->
+        <div class="block block-drop-shadow">
+            <%  if(thongbao.password == false)
+                {
+            %>
+                <div class="alert alert-danger">
+                    <b>Thất bại</b>
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+            <%
+                }
+                if(thongbao.password == true)
+                {
+            %>
+                    <div class="alert alert-success">
+                        <b>Thành công</b>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    </div>
+            <%
+                }
+            %>
+            <div class="header">
+                <h2>Đổi mất khẩu</h2>
+            </div>
+            <form action='/profile/doimatkhau' method='post'>
+                <div class="content controls">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <input type="password" class="form-control" placeholder="Mật khẩu cũ" name='matkhaucu'/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <input id="password" type="password" class="form-control" placeholder="Mật khẩu mới" name='matkhaumoi'/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <input id="Re-Password" type="password" class="form-control" placeholder="Nhập lại mật khẩu mới"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer tar">
+                    <button class="btn btn-default btn-clean">Confirm</button>
+                </div>
+            </form>
+        </div>                
+        
+    </div>
+    
+    
+    <div class="col-md-8">
+        <div class="block block-drop-shadow">
+            <%  if(thongbao.user == false)
+                {
+            %>
+                <div class="alert alert-danger">
+                    <b>Thất bại</b>
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+            <%
+                }
+                if(thongbao.user == true)
+                {
+            %>
+                    <div class="alert alert-success">
+                        <b>Thành công</b>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    </div>
+            <%
+                }
+            %>
+            <div class="header">
+                <h2>Chỉnh sửa thông tin cá nhân</h2>
+            </div>
+            
+            <form action='/profile/edit' method='post'>
+                <div class="content controls">
+                    <div class="form-row">
+                        <div class="col-md-3">Họ tên đầy đủ</div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="<%=user.name%>" name ='name'/>
+                        </div>
+                    </div>                       
+                    <div class="form-row">
+                        <div class="col-md-3">E-mail:</div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="<%=user.local.email%>" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">Phone:</div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="<%=user.phone%>" name="phone"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">ID tài khoản FB(Tài khoản chính):</div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="<%=user.id_facebook%>" name="id_facebook"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">Giới tính:</div>
+                        <div class="col-md-9">
+                            <div class="checkbox">
+                                <label><input id="gioitinh_nam" type="radio" name="gioitinh" value="1"/> Nam</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="gioitinh_nu" type="radio" name="gioitinh" value="0" checked /> Nữ</label>
+                            </div>                                
+                        </div>
+                    </div>                                                                      
+                </div>
+                <div class="footer tar">
+                    <button class="btn btn-default btn-clean">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- From avata -->
+    <div class="col-md-2">
+        <div class="block block-drop-shadow">
+            <%  if(thongbao.avata == false)
+                {
+            %>
+                <div class="alert alert-danger">
+                    <b>Đổi ảnh thất bại</b>
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+            <%
+                }
+                if(thongbao.avata == true)
+                {
+            %>
+                    <div class="alert alert-success">
+                        <b>Đổi ảnh thành công</b>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    </div>
+            <%
+                }
+            %>
+            <form action='/profile/upload_ava' method='post' encType="multipart/form-data">
+                <div class="head bg-dot30 npb">
+                    <h2>Picture</h2>
+                    <div class="pull-right">
+                        <input type='submit' class="btn btn-default btn-clean" value='Upload!'>
+                    </div>                        
+                </div>
+
+                <div class="head bg-dot30 np tac">
+                    <img src="http://localhost:8080/<%=user.avata%>" class="img-thumbnail img-circle"/>
+                </div>   
+
+                <div class="content controls">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="input-group file">
+                                <input type="text" class="form-control" value="<%=user.avata%>"/>
+                                <input type="file" name="image_ava" accept=".jpg,.png"/>
+                                <span class="input-group-btn">
+                                    <button class="btn" type="button">Browse</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8"> 
+        <a href="/profile" class="btn btn-default btn-clean btn-block">Trang quản lý</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var password = document.getElementById("password"), confirm_password = document.getElementById("Re-Password");
+
+    function validatePassword(){
+      if(password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Password chưa giống nhau");
+      } else {
+        confirm_password.setCustomValidity('');
+      }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+    if('<%=user.gioitinh%>' == '1')
+    {
+        document.getElementById("gioitinh_nam").checked = true;
+    }
+
+    if('<%=user.gioitinh%>'  == '0')
+    {
+        document.getElementById("gioitinh_nu").checked = true;
+    }
+</script>

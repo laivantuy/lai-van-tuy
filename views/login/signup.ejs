@@ -1,0 +1,89 @@
+<% include ../index_head %>
+	<% if (message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
+<div class="registration-block">
+    <div class="block block-transparent">
+    	<h1 class="head tac"><span class="fa fa-sign-in"></span> Tạo tài khoản</h1>
+        <div class="head tac">                    
+            <a href="/"><img src="img/logob.png"/></a>
+        </div>
+        <div class="content controls npt">
+            <form action="/signup" method="post">
+                <div class="form-row" style="margin-top: 10px;">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="icon-user"></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Tên đầy đủ"  name="name"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="icon-envelope"></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="E-mail" name="email"/>
+                        </div>
+                    </div>
+                </div>                    
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="icon-lock"></span>
+                            </div>
+                            <input id="password" type="password" class="form-control" placeholder="Password" name="password"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="icon-unlock-alt"></span>
+                            </div>
+                            <input id="Re-Password" type="password" class="form-control" placeholder="Re-Password"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-default btn-block btn-clean">Đăng ký</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <a href="/login" class="btn btn-default btn-block btn-clean">Đăng nhập</a>  
+                    </div>
+                </div>
+            </form>
+            <!-- <div class="form-row">
+                <div class="col-md-12 tac"><strong>OR USE</strong></div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <a href="sample_registration.html#" class="btn btn-info btn-block"><span class="icon-facebook"></span> &nbsp; Facebook</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="sample_registration.html#" class="btn btn-primary btn-block"><span class="icon-twitter"></span> &nbsp; Tweeter</a>
+                </div>
+            </div>     -->                
+        </div>
+    </div>
+</div>
+
+<% include ../index_foter %>
+<script type="text/javascript">
+	var password = document.getElementById("password"), confirm_password = document.getElementById("Re-Password");
+
+	function validatePassword(){
+	  if(password.value != confirm_password.value) {
+	    confirm_password.setCustomValidity("Password chưa giống nhau");
+	  } else {
+	    confirm_password.setCustomValidity('');
+	  }
+	}
+
+	password.onchange = validatePassword;
+	confirm_password.onkeyup = validatePassword;
+</script>

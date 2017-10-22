@@ -1,0 +1,247 @@
+<% include ../index_head_menu %>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <h1 align="center">Cài đặt: Tự động trả lời tin nhắn theo từ khóa</h1>
+        </div>
+    </div>
+</div>
+<%  if(thongbao)
+    {
+%>
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <b><%=thongbao%></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+        <div class="alert alert-success">
+            <b><a href="/hd_getcookie" target="_blank">Server chỉ nhận cookie lấy tại đây</a></b>
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+    </div>
+</div>
+<%
+    }
+%>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block block-transparent">
+                <div class="progress progress-striped active">
+                    <div id='loading' class="progress-bar progress-bar-danger"  role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    </div>
+                </div>                        
+        </div>
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-12">
+            <div class="block">
+                <div class="header">
+                    <h2>Danh sách tài khoản đang đăng nhập của bạn</h2>
+                </div>
+                <div class="content">
+                    <table class="table" style="text-align:center">
+                        <thead style="text-align:center">
+                            <tr style="text-align:center">
+                                <th style="text-align:center">STT</th>
+                                <th style="text-align:center">Ava</th>
+                                <th style="text-align:center">Tên tài khoản</th>
+                                <th style="text-align:center">Trạng Thái Auto</th>
+                                <th style="text-align:center">Quét SĐT </th>
+                                <th style="text-align:center">Danh sách TK</th>
+                                <th style="text-align:center">Cập nhật TK</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%  
+                            for(i=0; i < ds_accclone.length; i++) 
+                            {
+                        %>
+                            <tr>
+                                <td width="5%">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <%=i+1%>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+
+                                <td width="5%">
+                                <div class="form-row">
+                                        <div class="col-md-12">
+                                            <img src="<%=ds_accclone[i].db.avata%>" class="img-circle" alt="Cinque Terre" width="40" height="40">
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+
+                                <td width="15%">
+                                <div class="form-row">
+                                        <div class="col-md-12">
+                                            <h4><a href="<%=ds_accclone[i].db.link_profile%>" target="_blank"><%=ds_accclone[i].db.name%></a></h2>
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                <td width="10%">
+                                <div class="form-row">
+                                        <div class="col-md-12">
+                                            <form action="/profile/bot_messenger_trangthai" method="post" onsubmit="click_button('button<%=i%>')">
+                                                <input ' type='hidden' value="<%=ds_accclone[i].db.id%>" name='id'>
+                                                    <%  if(ds_accclone[i].db.trangthai==1)
+                                                        {
+                                                    %> 
+                                                            <input type='hidden' value="0" name='trangthai'>
+                                                            <button id='button<%=i%>' type="submit" class="btn btn-danger" onclick='loading()'>Tạm dừng</button>
+                                                    <%  }
+                                                        else
+                                                        {
+                                                    %>
+                                                            <input type='hidden' value="1" name='trangthai'>
+                                                            <button id='button<%=i%>' type="submit" class="btn btn-success" onclick='loading()'>Bắt đầu</button>
+                                                    <%
+                                                        }
+                                                    %>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+                                
+                                <td width="5%">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <form action="/profile/bot_messenger_config_quetsdt" method="post" id='config_quetsdt<%=i%>'>
+                                                <input ' type='hidden' value="<%=ds_accclone[i].db.id%>" name='id'>
+                                                    <%  if(user.id_facebook)
+                                                        {
+                                                            if(ds_accclone[i].db.config_quetsdt)
+                                                            {
+                                                    %> 
+                                                                <div class="checkbox-inline">
+                                                                    <label><input type="checkbox" name="config_quetsdt" checked="checked" onchange="submitfrom_config_quetsdt('<%=i%>')" /></label>
+                                                                </div>   
+                                                    <%  
+                                                            }
+                                                            else
+                                                            {
+                                                            %>
+                                                                <div class="checkbox-inline">
+                                                                    <label><input type="checkbox" name="config_quetsdt" onchange="submitfrom_config_quetsdt('<%=i%>')"/></label>
+                                                                </div>
+                                                            <%
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                    %>
+                                                            <a href="/profile/edit">Cập nhật ID tài khoản chính tại đây</a>
+                                                    <%
+                                                        }
+                                                    %>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+
+                                <form method="post" action='/profile/bot_messenger_capnhattk' id='capnhattk<%=i%>'>
+                                    <td width="30%">
+                                        <div class="form-row">
+                                            <div class="col-md-12">     
+                                                <input list="browsers" name="tukhoa" type="hidden">
+                                                <input type="hidden" name="id_account" value="<%=ds_accclone[i].db.id%>" >
+                                                <select class="select2" multiple="multiple" tabindex="-1" name="tukhoa" style="width: 100%;">
+                                                    <%  if(ds_accclone[i].db.tukhoa)
+                                                        {   
+                                                            if(form_tukhoa)
+                                                            {
+                                                                for(n=0; n < form_tukhoa.length; n++)
+                                                                {
+                                                                    for(m=1; m< ds_accclone[i].db.tukhoa.length; m++)
+                                                                    {
+                                                                    
+                                                                        if(ds_accclone[i].db.tukhoa[m] == form_tukhoa[n].db.id)
+                                                                        {
+                                                                            m=ds_accclone[i].db.tukhoa.length;
+                                                                        %>
+                                                                            <option value="<%=form_tukhoa[n].db.id%>" selected="selected"><%=form_tukhoa[n].db.name_tukhoa%></option>
+                                                                        <%  
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if(m == ds_accclone[i].db.tukhoa.length -1)
+                                                                            {
+                                                                            %>
+                                                                                <option value="<%=form_tukhoa[n].db.id%>"><%=form_tukhoa[n].db.name_tukhoa%></option>
+                                                                            <%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                           
+                                                        }
+                                                        else
+                                                        {
+                                                            if(form_tukhoa)
+                                                            {
+                                                                for(n=0; n < form_tukhoa.length; n++)
+                                                                {
+                                                                %>
+                                                                    <option value="<%=form_tukhoa[n].db.id%>"><%=form_tukhoa[n].db.name_tukhoa%></option>
+                                                                <% 
+                                                                }
+                                                            }
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td width="5%">
+                                        <a  onclick="submitform_capnhattk('<%=i%>')" class="widget-icon widget-icon-large widget-icon-dark icon-repeat"></a>
+                                    </td>
+                                </form>
+                            </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>                       
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function loading(){
+        var i=0
+        setInterval(function(){
+            document.getElementById("loading").style.width = i+"%";
+            i++
+        },50)
+    }
+
+    function click_button(id) {
+        return document.getElementById(id).disabled = true;
+    }
+
+    function submitform_delete(id) {
+        document.getElementById('delete'+id).submit(); 
+    } 
+
+    function submitform_capnhattk(id) 
+    {   
+        document.getElementById('capnhattk'+id).submit(); 
+    }
+
+    function submitfrom_config_quetsdt(id) 
+    {   
+        document.getElementById('config_quetsdt'+id).submit(); 
+    }
+</script>
